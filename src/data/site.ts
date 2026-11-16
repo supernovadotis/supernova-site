@@ -5,6 +5,8 @@ export const site = {
     'We write about the gap between what human civilization can now do and what it is capable of doing well.',
   archiveUrl: 'https://archive.supernova.is',
   telegramUrl: 'https://t.me/supernovafuture',
+  // Author card under articles: 'glow' | 'glass' | 'line' | 'dark' | 'split'
+  authorCard: 'glow',
   substackEmbed: 'https://supernovamedia.substack.com/embed?transparent=1',
 };
 

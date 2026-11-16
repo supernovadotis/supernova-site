@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import Subscribe from '../../components/Subscribe.astro';
+import AuthorCard from '../../components/AuthorCard.astro';
 import { rubricName, formatName, formatDate } from '../../data/site';
 
 export async function getStaticPaths() {
@@ -17,7 +18,6 @@ const { article, all } = Astro.props;
 const d = article.data;
 const { Content, headings } = await render(article);
 const author = d.author ? await getEntry('authors', d.author) : null;
-const AuthorBio = author ? (await render(author)).Content : null;
 const toc = headings.filter((h) => h.depth === 2);
 const url = new URL(`/${d.rubric}/${article.id}/`, Astro.site).href;
 const mdUrl = `/${d.rubric}/${article.id}.md`;
@@ -85,8 +85,12 @@ const faqLd = d.faq?.length && {
 
     {d.cover ? (
       <figure class="hero-image">
-        <img src={d.cover} alt="" />
-        {d.coverCaption && <figcaption>{d.coverCaption}</figcaption>}
+        <div class="frame"><img src={d.cover} alt="" /></div>
+        {(d.coverCaption || d.coverCredit) && (
+          <figcaption>
+            {d.coverCaption} {d.coverCredit && <span class="credit">Source: {d.coverCredit}</span>}
+          </figcaption>
+        )}
       </figure>
     ) : coverLines.length > 0 && (
       <div class="article-cover">
@@ -161,16 +165,7 @@ const faqLd = d.faq?.length && {
       </section>
     )}
 
-    {author && (
-      <section class="author-card" aria-label="About the author">
-        {author.data.photo ? <img class="avatar" src={author.data.photo} alt="" /> : <span class="avatar" aria-hidden="true">{author.data.name.charAt(0)}</span>}
-        <div>
-          <h3><a href={`/authors/${author.id}/`}>{author.data.name}</a></h3>
-          {author.data.role && <p>{author.data.role}</p>}
-          {AuthorBio && <div class="author-bio"><AuthorBio /></div>}
-        </div>
-      </section>
-    )}
+    {author && <AuthorCard author={author} />}
 
     <div style="margin-top: 48px"><Subscribe /></div>
 

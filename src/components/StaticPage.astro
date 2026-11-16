@@ -19,7 +19,7 @@ const { Content } = await render(page);
     </header>
     {d.cover && (
       <figure class="hero-image">
-        <img src={d.cover} alt="" />
+        <div class="frame"><img src={d.cover} alt="" /></div>
         {d.coverCaption && <figcaption>{d.coverCaption}</figcaption>}
       </figure>
     )}

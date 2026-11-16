@@ -20,11 +20,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
     <slot name="head" />
   </head>
   <body>
     <Header current={current} />
     <slot />
     <Footer />
+    <script>import '../scripts/alive.js';</script>
   </body>
 </html>

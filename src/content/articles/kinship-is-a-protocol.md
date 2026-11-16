@@ -8,7 +8,8 @@ author: anna-ignatenko
 readingTime: 9
 order: 2
 cover: /images/placeholder.jpg
-coverCaption: "[Image caption and credit]"
+coverCaption: "[Caption: what the picture shows]"
+coverCredit: "[author or archive]"
 takeaways:
   - The 2020 Indigenous Protocol and Artificial Intelligence Position Paper is a technical proposal, with authors, citations and a DOI. The industry files it under diversity.
   - '"Protocol" has two meanings, the networking one and the ceremonial one. Both answer the same question: what has to be true for this interaction to work?'
@@ -58,8 +59,8 @@ The two definitions are not as far apart as they look. Both are answers to the q
 The Lakȟóta sweat-lodge protocol makes assumptions too. Kite lays them out in her essay. There is a specific person who has the right to lead the ceremony, and that right is not self-conferred; it comes through a chain of teaching and permission. There are materials — stones, water, wood, herbs — that must be sourced from specific relationships with the land. There is an order in which the participants enter, an order in which offerings are made, an order in which prayers are said. Every step of the protocol is what makes the outcome possible without harm. Skip a step, or improvise one, and the ceremony is not what it claims to be.
 
 <figure>
-  <img src="/images/placeholder.jpg" alt="" />
-  <figcaption>[Image caption and credit]</figcaption>
+  <img src="/images/placeholder.jpg" alt="[Describe the image]" />
+  <figcaption>[Caption: what the picture shows] <span class="credit">Source: [author or archive]</span></figcaption>
 </figure>
 
 The move Kite makes — and it is the move the industry has struggled most to read — is to observe that building a computing device is also a chain of relationships, also an ordered set of steps, and also has the possibility of harm at every step. The rare earths that go into the chip come from a specific place, extracted by specific people, under specific conditions. The chip is fabricated in a specific plant, using specific chemicals, by specific workers. The device is assembled in a specific factory. The device is used, and eventually discarded, and eventually re-enters the earth somewhere. Every step of that chain is a relationship. Most of those relationships, in the industry's current protocol, are extractive by default.
@@ -67,6 +68,11 @@ The move Kite makes — and it is the move the industry has struggled most to re
 Kite's proposal is not that the industry should perform sweat-lodge ceremonies before shipping hardware. That is not what "How to Build Anything Ethically" says, and reading it that way — as many people do, when the paper is mentioned to them — is the category error in its most compact form. The proposal is that the sweat-lodge protocol is an existing, working example of how to run an ordered relationship-chain such that the outcome is possible without harm, and that the industry currently has no such protocol for its own hardware chain, and that the sweat-lodge protocol can be studied, formally, for what it does at each step. What is asked, what is offered, what is refused, what is checked, what is closed.
 
 > The paper is a spec sheet. Read it as a spec sheet and it starts making sense.
+
+<figure class="wide">
+  <img src="/images/placeholder.jpg" alt="[Describe the image]" />
+  <figcaption>[Caption for a wide image that runs the full width of the text panel] <span class="credit">Source: [author or archive]</span></figcaption>
+</figure>
 
 ## ʻĀIna, and the reframing of what AI is
 
@@ -85,6 +91,12 @@ Arista and Lewis are not saying that Hawaiian ontology is more correct than West
 There is a specific machinery by which serious technical proposals from Indigenous scholars get filed under diversity in the industry's mind. It is worth naming, because it does not name itself.
 
 The machinery has three moves. First, the proposal is described as *cultural*, which in industry vocabulary usually means *particular to a group and not universal*. Western proposals are almost never described this way. TCP is not called a cultural protocol, even though it is: it is the culture of a specific group of network engineers in a specific decade, with specific assumptions about what a good network looks like. The Hawaiian and Lakȟóta proposals in the IP AI paper get called cultural because their authors are Indigenous. This is a labeling asymmetry, not a technical judgment.
+
+<figure class="pair">
+  <img src="/images/placeholder.jpg" alt="[Describe the first image]" />
+  <img src="/images/placeholder.jpg" alt="[Describe the second image]" />
+  <figcaption>[Caption for two pictures side by side] <span class="credit">Source: [author or archive]</span></figcaption>
+</figure>
 
 Second, once the proposal has been marked cultural, its authors are read as representatives of their communities rather than as researchers. Kite is Oglála Lakȟóta, and her paper draws on Lakȟóta protocols. This becomes, in the industry's reading, a paper about Lakȟóta perspectives on AI, rather than a paper about how to build hardware ethically that happens to draw on Lakȟóta protocols. The difference is whether the paper is understood as making a claim about hardware or about identity. It is making a claim about hardware.
 
@@ -115,6 +127,11 @@ None of these are impossible changes. Some of them are expensive. Some of them a
 ## The paper is a piece of the field
 
 The last thing worth saying — and this is where the piece stops, because saying more would be reaching past what the sources support — is that the Indigenous Protocol and Artificial Intelligence Position Paper is not asking to be included as a perspective. It is not asking for a seat at the table. It is a piece of the technical literature of AI ethics. It has authors, citations, a DOI, a working group, and successor projects (Abundant Intelligences, the Papa Reo work, the ongoing IP AI workshops). It has been co-signed by more than thirty scholars with named institutional affiliations.
+
+<figure class="small">
+  <img src="/images/placeholder.jpg" alt="[Describe the image]" />
+  <figcaption>[Caption for a small picture set beside the text] <span class="credit">Source: [author or archive]</span></figcaption>
+</figure>
 
 The reason it is not read as part of the field is not that it fails to meet the field's standards. It is that the field's picture of who writes protocols does not yet include the people who wrote this one.
 

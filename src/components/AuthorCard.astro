@@ -1,0 +1,20 @@
+---
+// Author card shown under an article. Variants: glow | glass | line | dark | split
+// The site-wide choice is `authorCard` in src/data/site.ts.
+import { render } from 'astro:content';
+import { site } from '../data/site';
+const { author, variant = site.authorCard } = Astro.props;
+const d = author.data;
+const { Content } = await render(author);
+const href = `/authors/${author.id}/`;
+---
+<section class={`author-card ac-${variant}`} aria-label="About the author">
+  {d.photo ? <img class="ac-photo" src={d.photo} alt="" loading="lazy" /> : <span class="ac-photo avatar" aria-hidden="true">{d.name.charAt(0)}</span>}
+  <div class="ac-text">
+    <span class="ac-kicker">Written by</span>
+    <h3><a href={href}>{d.name}</a></h3>
+    {d.role && <p class="ac-role">{d.role}</p>}
+    <div class="ac-bio"><Content /></div>
+    <a class="ac-more" href={href}>All articles by {d.name.split(' ')[0]} →</a>
+  </div>
+</section>

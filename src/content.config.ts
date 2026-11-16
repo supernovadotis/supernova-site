@@ -27,6 +27,7 @@ const articles = defineCollection({
     // Cover image (path under public/, e.g. /images/kinship.jpg) with optional caption.
     cover: z.string().optional(),
     coverCaption: z.string().optional(),
+    coverCredit: z.string().optional(),
     // Typographic cover, used when there is no image. *word* highlights a word.
     coverKicker: z.string().optional(),
     coverLines: z.array(z.string()).optional(),

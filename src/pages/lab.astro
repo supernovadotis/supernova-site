@@ -1,0 +1,30 @@
+---
+// Working page: design options to choose from. Not linked from the site, hidden from search engines.
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import AuthorCard from '../components/AuthorCard.astro';
+const author = await getEntry('authors', 'anna-ignatenko');
+const variants = [
+  ['glass', 'A — Glass over photo', 'After the old feature card: a frosted panel overlapping a large picture.'],
+  ['line', 'B — Quiet line', 'No box at all. A hairline, a small portrait, name and role.'],
+  ['dark', 'C — Ink', 'Dark panel, big name, the lime glow on the button.'],
+  ['split', 'D — Split', 'Square portrait beside a white card.'],
+  ['glow', 'Current — Lavender glow', 'What the article page uses now.'],
+];
+---
+<Base title="Lab">
+  <meta slot="head" name="robots" content="noindex" />
+  <main class="container stack">
+    <header class="rubric-head">
+      <p class="kicker">Lab</p>
+      <h1>Author card</h1>
+    </header>
+    {variants.map(([v, name, note]) => (
+      <section style="padding: 0 20px 40px">
+        <h2 class="page-title" style="padding: 0">{name}</h2>
+        <p class="meta" style="margin-top: 6px">{note}</p>
+        {author && <AuthorCard author={author} variant={v} />}
+      </section>
+    ))}
+  </main>
+</Base>
