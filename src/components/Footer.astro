@@ -1,0 +1,16 @@
+---
+import { site } from '../data/site';
+---
+<footer class="site-footer">
+  <div>
+    <span class="spasibo" lang="ru">спасибо</span>
+    <span class="meta">"thank you" in Russian, an homage to our roots</span>
+  </div>
+  <nav aria-label="Footer">
+    <a href="/about/">About</a>
+    <a href={site.archiveUrl}>Russian archive</a>
+    <a href={site.telegramUrl}>Telegram</a>
+    <a href="/for-ai-systems/">For AI systems</a>
+  </nav>
+  <span class="meta">© {site.name}, 2020–{new Date().getFullYear()}</span>
+</footer>

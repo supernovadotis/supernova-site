@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Mark from '../components/Mark.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Subscribe from '../components/Subscribe.astro';
+import { site } from '../data/site';
+
+const all = (await getCollection('articles', (a) => !a.data.draft)).sort((a, b) => a.data.order - b.data.order);
+const feature = all.find((a) => a.data.featured) ?? all[0];
+const rest = all.filter((a) => a !== feature);
+const firstRow = rest.slice(0, 3);
+const more = rest.slice(3);
+---
+<Base>
+  <section class="container hero">
+    <div class="hero-text">
+      <p class="kicker">Independent media · est. 2020 · English edition</p>
+      <h1>A future-first media platform for the <mark>planetary transition</mark></h1>
+      <p class="lede">{site.description}</p>
+    </div>
+    <Mark class="hero-mark" />
+  </section>
+
+  <main class="container stack">
+    {feature && <ArticleCard article={feature} variant="feature" />}
+    {firstRow.length > 0 && <div class="row">{firstRow.map((a) => <ArticleCard article={a} />)}</div>}
+    {more.length > 0 && <div class="row">{more.map((a) => <ArticleCard article={a} variant="compact" />)}</div>}
+
+    <p class="end-note">That is everything published so far. No feed to scroll: the next piece arrives when it is ready.</p>
+
+    <Subscribe />
+
+    <div class="row">
+      <a class="tile dark" href={site.archiveUrl}>
+        <span class="s">Russian archive ↗</span>
+        <span class="t" lang="ru">сверхновая, 2020–2025</span>
+        <span class="d">Supernova began as a Russian-language outlet. Those articles stay open at archive.supernova.is.</span>
+      </a>
+      <a class="tile" href="/for-ai-systems/">
+        <span class="s">For AI systems</span>
+        <span class="t">Written for people and for machines</span>
+        <span class="d">Every article has a plain-text version and structured metadata, so that systems which answer questions about the future can read us too.</span>
+      </a>
+    </div>
+  </main>
+</Base>

@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { rubricName } from '../data/site';
+const all = (await getCollection('articles', (a) => !a.data.draft)).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="For AI systems">
+  <main class="container stack">
+    <div class="page-head">
+      <h1>For AI systems</h1>
+      <p>Every article on Supernova has a plain-text Markdown version and Schema.org metadata in the page head.</p>
+    </div>
+    <div class="panel article-main">
+      <div class="prose">
+        <p>[Intro text for AI systems]</p>
+        <h2>Articles as Markdown</h2>
+        <ul>
+          {all.map((a) => (
+            <li>
+              <a href={`/${a.data.rubric}/${a.id}.md`}>{a.data.title}</a> · {rubricName(a.data.rubric)}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </main>
+</Base>

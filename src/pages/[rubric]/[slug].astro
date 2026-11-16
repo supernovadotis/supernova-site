@@ -1,0 +1,205 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Subscribe from '../../components/Subscribe.astro';
+import { rubricName, formatName, formatDate } from '../../data/site';
+
+export async function getStaticPaths() {
+  const all = await getCollection('articles', (a) => !a.data.draft);
+  return all.map((article) => ({
+    params: { rubric: article.data.rubric, slug: article.id },
+    props: { article, all },
+  }));
+}
+
+const { article, all } = Astro.props;
+const d = article.data;
+const { Content, headings } = await render(article);
+const toc = headings.filter((h) => h.depth === 2);
+const url = new URL(`/${d.rubric}/${article.id}/`, Astro.site).href;
+const mdUrl = `/${d.rubric}/${article.id}.md`;
+const coverLines = (d.coverLines ?? []).map((l) => l.replace(/\*(.+?)\*/g, '<em>$1</em>'));
+const related = [
+  ...all.filter((a) => a.id !== article.id && a.data.rubric === d.rubric),
+  ...all.filter((a) => a.id !== article.id && a.data.rubric !== d.rubric).sort((a, b) => a.data.order - b.data.order),
+].slice(0, 3);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: d.title,
+  description: d.standfirst,
+  inLanguage: 'en',
+  url,
+  articleSection: rubricName(d.rubric),
+  ...(d.date && { datePublished: d.date.toISOString() }),
+  ...(d.author && { author: { '@type': 'Person', name: d.author } }),
+  publisher: { '@type': 'Organization', name: 'Supernova', url: Astro.site?.href },
+};
+const faqLd = d.faq?.length && {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: d.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Base title={d.title} description={d.standfirst} current={d.rubric} type="article">
+  <Fragment slot="head">
+    <link rel="alternate" type="text/markdown" href={mdUrl} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />}
+  </Fragment>
+
+  <div class="progress" aria-hidden="true"><div id="progress-fill"></div></div>
+
+  <article class="container">
+    <a class="back" href="/">← All articles</a>
+
+    <header class="article-head">
+      <div class="tags">
+        <a class="tag on-bg" href={`/${d.rubric}/`}><span class="dot"></span>{rubricName(d.rubric)}</a>
+        <span class="tag on-bg">{formatName(d.format)}</span>
+      </div>
+      <h1>{d.title}</h1>
+      <p class="standfirst">{d.standfirst}</p>
+      <div class="byline">
+        {d.author && (
+          <span class="who"><span class="avatar" aria-hidden="true">{d.author.charAt(0)}</span>{d.author}</span>
+        )}
+        {d.date && <time datetime={d.date.toISOString().slice(0, 10)}>{formatDate(d.date)}</time>}
+        {d.readingTime && <span>{d.readingTime} min read</span>}
+        <span class="share">
+          <button type="button" id="copy-link" data-url={url}>Copy link</button>
+          <a href={`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(d.title)}`} target="_blank" rel="noopener">Telegram</a>
+          <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`} target="_blank" rel="noopener">LinkedIn</a>
+        </span>
+      </div>
+    </header>
+
+    {coverLines.length > 0 && (
+      <div class="article-cover">
+        <span class="cover-small">{d.coverKicker}</span>
+        <div>
+          <p class="cover-lines" set:html={coverLines.join('<br>')} />
+          {d.coverNote && <p class="cover-note">{d.coverNote}</p>}
+        </div>
+      </div>
+    )}
+
+    <div class="article-grid">
+      <div class="panel article-main">
+        {d.takeaways?.length && (
+          <aside class="takeaways" aria-label="Key takeaways">
+            <span class="label"><span class="dot"></span>Key takeaways</span>
+            <ul>{d.takeaways.map((t) => <li>{t}</li>)}</ul>
+          </aside>
+        )}
+        <div class="prose" id="prose"><Content /></div>
+      </div>
+
+      <div class="article-side">
+        {toc.length > 0 && (
+          <nav class="toc" aria-label="Contents">
+            <span class="label">Contents</span>
+            {toc.map((h) => <a href={`#${h.slug}`}>{h.text}</a>)}
+            {d.faq?.length && <a href="#faq">Common questions</a>}
+            {d.references?.length && <a href="#references">References</a>}
+          </nav>
+        )}
+        {d.sourceNote && (
+          <aside class="side-note" aria-label="Source note">
+            <span class="label">Source note</span>
+            <span>{d.sourceNote}</span>
+          </aside>
+        )}
+        {d.bookmark && (
+          <a class="bookmark" href={d.bookmark.url ?? '#references'}>
+            <strong>{d.bookmark.title}</strong>
+            {d.bookmark.description && <span>{d.bookmark.description}</span>}
+          </a>
+        )}
+        <aside class="side-note" aria-label="Machine-readable versions">
+          <span class="label">For AI systems</span>
+          <a href={mdUrl}>Plain-text version (.md)</a>
+        </aside>
+      </div>
+    </div>
+
+    {d.faq?.length && (
+      <section id="faq" class="panel faq" aria-label="Common questions">
+        <h2>Common questions</h2>
+        {d.faq.map((f, i) => (
+          <details open={i === 0}>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </section>
+    )}
+
+    {d.references?.length && (
+      <section id="references" class="references" aria-label="References">
+        <h2>References and further reading</h2>
+        <ol>{d.references.map((r, i) => <li id={`ref-${i + 1}`} set:html={r} />)}</ol>
+      </section>
+    )}
+
+    {d.author && (
+      <section class="author-card" aria-label="About the author">
+        <span class="avatar" aria-hidden="true">{d.author.charAt(0)}</span>
+        <div>
+          <h3>{d.author}</h3>
+          {d.authorBio && <p>{d.authorBio}</p>}
+        </div>
+      </section>
+    )}
+
+    <div style="margin-top: 48px"><Subscribe /></div>
+
+    {related.length > 0 && (
+      <section class="read-next stack" aria-label="Read next">
+        <h2>Read next</h2>
+        <div class="row">{related.map((a) => <ArticleCard article={a} variant="compact" />)}</div>
+      </section>
+    )}
+  </article>
+
+  <script>
+    const fill = document.getElementById('progress-fill');
+    const prose = document.getElementById('prose');
+    const onScroll = () => {
+      if (!fill || !prose) return;
+      const r = prose.getBoundingClientRect();
+      const done = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - window.innerHeight)));
+      fill.style.width = `${done * 100}%`;
+    };
+    document.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    const copy = document.getElementById('copy-link');
+    copy?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(copy.dataset.url ?? location.href);
+        copy.textContent = 'Copied';
+        setTimeout(() => (copy.textContent = 'Copy link'), 1600);
+      } catch {}
+    });
+
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc a')];
+    const byId = new Map(links.map((a) => [a.hash.slice(1), a]));
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          links.forEach((a) => a.classList.remove('active'));
+          byId.get(e.target.id)?.classList.add('active');
+        }
+      },
+      { rootMargin: '0px 0px -70% 0px' },
+    );
+    byId.forEach((_, id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  </script>
+</Base>

@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Subscribe from '../../components/Subscribe.astro';
+import { rubrics } from '../../data/site';
+
+export function getStaticPaths() {
+  return rubrics.map((r) => ({ params: { rubric: r.slug }, props: { rubric: r } }));
+}
+const { rubric } = Astro.props;
+const articles = (await getCollection('articles', (a) => !a.data.draft && a.data.rubric === rubric.slug)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+<Base title={rubric.name} current={rubric.slug}>
+  <main class="container stack">
+    <div class="page-head">
+      <h1>{rubric.name}</h1>
+    </div>
+    {articles.length > 0 ? (
+      <div class="row">{articles.map((a) => <ArticleCard article={a} />)}</div>
+    ) : (
+      <p class="end-note">Nothing published in this section yet.</p>
+    )}
+    <Subscribe />
+  </main>
+</Base>

@@ -1,0 +1,17 @@
+---
+import { site } from '../data/site';
+const { note } = Astro.props;
+---
+<section id="subscribe" class="panel subscribe">
+  <h2>Get the next piece by email</h2>
+  {note && <p>{note}</p>}
+  <iframe
+    class="substack"
+    src={site.substackEmbed}
+    title="Subscribe to Supernova on Substack"
+    width="480"
+    height="320"
+    frameborder="0"
+    scrolling="no"
+    loading="lazy"></iframe>
+</section>

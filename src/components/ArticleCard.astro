@@ -1,0 +1,36 @@
+---
+import { rubricName, formatName, formatDate } from '../data/site';
+// variant: 'default' (cover + text), 'feature' (big opening card), 'compact' (text only)
+const { article, variant = 'default' } = Astro.props;
+const d = article.data;
+const href = `/${d.rubric}/${article.id}/`;
+const lines = (d.coverLines ?? []).map((l: string) => l.replace(/\*(.+?)\*/g, '<em>$1</em>'));
+const meta = [formatDate(d.date), d.readingTime && `${d.readingTime} min read`].filter(Boolean).join(' · ');
+---
+<a class={`card ${variant}`} href={href}>
+  <div class="card-cover">
+    {variant === 'feature' ? (
+      <>
+        <span class="cover-small">{d.coverKicker ?? rubricName(d.rubric)}</span>
+        <p class="cover-lines" set:html={lines.join('<br>') || d.title} />
+      </>
+    ) : (
+      <span class="word">{d.rubric}</span>
+    )}
+  </div>
+  <div class="card-body">
+    <div class="tags">
+      <span class="tag"><span class="dot"></span>{rubricName(d.rubric)}</span>
+      <span class="tag">{formatName(d.format)}</span>
+    </div>
+    <h3>{d.title}</h3>
+    <p class="dek">{d.standfirst}</p>
+    {(d.author || meta) && (
+      <p class="meta">
+        {d.author && <strong>{d.author}</strong>}
+        {d.author && meta && ' · '}
+        {meta}
+      </p>
+    )}
+  </div>
+</a>

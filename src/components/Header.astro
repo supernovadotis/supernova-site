@@ -1,0 +1,18 @@
+---
+import Mark from './Mark.astro';
+import { site, rubrics } from '../data/site';
+const { current } = Astro.props;
+---
+<header class="site-header">
+  <a class="logo" href="/"><Mark />{site.name}</a>
+  <nav class="nav" aria-label="Sections">
+    {rubrics.map((r) => (
+      <a href={`/${r.slug}/`} aria-current={current === r.slug ? 'page' : undefined}>{r.name}</a>
+    ))}
+  </nav>
+  <nav class="nav" aria-label="Site">
+    <a href="/about/" aria-current={current === 'about' ? 'page' : undefined}>About</a>
+    <a href={site.archiveUrl}>Russian archive</a>
+    <a class="cta" href="#subscribe">Subscribe</a>
+  </nav>
+</header>
