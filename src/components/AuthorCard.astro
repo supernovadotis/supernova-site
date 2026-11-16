@@ -9,12 +9,17 @@ const { Content } = await render(author);
 const href = `/authors/${author.id}/`;
 ---
 <section class={`author-card ac-${variant}`} aria-label="About the author">
-  {d.photo ? <img class="ac-photo" src={d.photo} alt="" loading="lazy" /> : <span class="ac-photo avatar" aria-hidden="true">{d.name.charAt(0)}</span>}
+  <a class="ac-photo-link" href={href} tabindex="-1" aria-hidden="true">
+    {d.photo ? <img class="ac-photo" src={d.photo} alt="" loading="lazy" /> : <span class="ac-photo avatar">{d.name.charAt(0)}</span>}
+  </a>
   <div class="ac-text">
-    <span class="ac-kicker">Written by</span>
     <h3><a href={href}>{d.name}</a></h3>
     {d.role && <p class="ac-role">{d.role}</p>}
     <div class="ac-bio"><Content /></div>
-    <a class="ac-more" href={href}>All articles by {d.name.split(' ')[0]} →</a>
+    {d.links.length > 0 && (
+      <div class="ac-links">
+        {d.links.map((l) => <a class="ac-more" href={l.url} target="_blank" rel="noopener">{l.label} ↗</a>)}
+      </div>
+    )}
   </div>
 </section>

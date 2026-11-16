@@ -235,26 +235,31 @@ h1, h2, h3, p { margin: 0; }
 .author-card h3 { font-size: 24px; font-weight: 700; line-height: 1.15; }
 .author-card h3 a { text-decoration: none; }
 .ac-text { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
-.ac-kicker { font-size: 14px; color: var(--meta); }
 .ac-role { font-size: 17px; color: var(--ink-soft); }
 .ac-bio { font-size: 16px; line-height: 1.5; color: var(--ink-soft); }
-.ac-more { align-self: flex-start; margin-top: 6px; padding: 8px 16px; border-radius: var(--pill); background: var(--bg); box-shadow: var(--shadow-inner); font-size: 15px; text-decoration: none; }
+.ac-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.ac-photo-link { flex: none; display: block; line-height: 0; }
+.ac-more { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: var(--pill); background: var(--bg); box-shadow: var(--shadow-inner); font-size: 15px; text-decoration: none; }
 .ac-more:hover { background: var(--hover); color: var(--ink); }
 .ac-photo { flex: none; object-fit: cover; }
 
 .ac-glow { padding: clamp(24px, 4vw, 40px); display: flex; flex-wrap: wrap; align-items: center; gap: 24px; background: radial-gradient(circle at 15% 50%, rgba(186, 180, 250, 0.35), #fff 60%); border: 1px solid var(--border); border-radius: var(--radius-lg); }
-.ac-glow .ac-photo { width: 96px; height: 96px; border-radius: 50%; font-size: 36px; }
+.ac-glow { gap: 32px; }
+.ac-glow .ac-photo { width: 180px; height: 180px; border-radius: 50%; font-size: 64px; }
+.ac-glow h3 { font-size: 28px; }
+.ac-glow .ac-more { background: var(--surface); }
 .ac-glow .ac-text { flex: 1 1 320px; }
 
 .ac-glass { position: relative; display: flex; align-items: center; min-height: 340px; }
-.ac-glass .ac-photo { position: absolute; inset: 0 0 0 auto; width: 64%; height: 100%; border-radius: var(--radius-lg); }
+.ac-glass .ac-photo-link { position: absolute; inset: 0 0 0 auto; width: 64%; }
+.ac-glass .ac-photo { width: 100%; height: 100%; border-radius: var(--radius-lg); }
 .ac-glass .ac-text { position: relative; width: min(460px, 62%); padding: 32px 36px; background: rgba(245, 245, 244, 0.74); border: 1.2px solid rgba(255, 255, 255, 0.6); border-radius: var(--radius-lg); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: var(--shadow-glass); }
 .ac-glass .ac-more { background: var(--surface); }
 
 .ac-line { padding: 24px 20px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 20px; border-top: 1px solid var(--border); }
 .ac-line .ac-photo { width: 64px; height: 64px; border-radius: 50%; }
 .ac-line .ac-text { flex: 1 1 280px; gap: 2px; }
-.ac-line .ac-kicker, .ac-line .ac-bio { display: none; }
+.ac-line .ac-bio { display: none; }
 .ac-line h3 { font-size: 20px; }
 .ac-line .ac-role { font-size: 15px; color: var(--meta); }
 .ac-line .ac-more { position: static; margin-top: 10px; background: var(--surface); }
@@ -264,18 +269,22 @@ h1, h2, h3, p { margin: 0; }
 .ac-dark .ac-text { flex: 1 1 320px; }
 .ac-dark h3 { font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 900; letter-spacing: -0.02em; }
 .ac-dark h3 a { color: var(--on-ink); }
-.ac-dark .ac-kicker, .ac-dark .ac-role, .ac-dark .ac-bio { color: var(--on-ink-soft); }
+.ac-dark .ac-role, .ac-dark .ac-bio { color: var(--on-ink-soft); }
 .ac-dark .ac-more { background: var(--surface); color: var(--ink); box-shadow: var(--glow-cta); }
 
 .ac-split { display: flex; flex-wrap: wrap; gap: 16px; }
-.ac-split .ac-photo { flex: 0 0 220px; width: 220px; aspect-ratio: 1; border-radius: var(--radius); }
+.ac-split .ac-photo-link { flex: 0 0 220px; }
+.ac-split .ac-photo { width: 100%; aspect-ratio: 1; border-radius: var(--radius); }
 .ac-split .ac-text { flex: 1 1 320px; justify-content: center; padding: 28px 32px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-card); }
 
 @media (max-width: 640px) {
   .ac-glass { display: block; min-height: 0; }
-  .ac-glass .ac-photo { position: static; width: 100%; height: 240px; }
+  .ac-glass .ac-photo-link { position: static; width: 100%; }
+  .ac-glass .ac-photo { height: 240px; }
+  .ac-glow .ac-photo { width: 120px; height: 120px; }
   .ac-glass .ac-text { width: auto; margin: -56px 12px 0; }
-  .ac-split .ac-photo { flex-basis: 100%; width: 100%; aspect-ratio: 16 / 10; }
+  .ac-split .ac-photo-link { flex-basis: 100%; }
+  .ac-split .ac-photo { aspect-ratio: 16 / 10; }
 }
 .read-next { margin-top: 56px; }
 .read-next h2, .page-title { padding: 0 20px; font-size: 28px; font-weight: 900; letter-spacing: -0.02em; }
