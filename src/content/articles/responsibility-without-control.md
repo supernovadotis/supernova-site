@@ -3,6 +3,8 @@ title: Responsibility without control
 standfirst: "Planetary adulthood, stated as an argument rather than a declaration: what it means to answer for systems nobody steers."
 rubric: agency
 format: essay
+tags: [planetary, action]
+cover: /images/placeholder.jpg
 order: 3
 ---
 

@@ -6,29 +6,36 @@ Static site for supernova.is, built with [Astro](https://astro.build).
     npm run dev      # http://localhost:4321
     npm run build    # output in dist/
 
-## Adding an article
+## Content
 
-Create `src/content/articles/<slug>.md`. The file name is the URL slug; the page
-is published at `/<rubric>/<slug>/`, with a plain-text copy at `/<rubric>/<slug>.md`.
+Everything editable lives in `src/content/` as Markdown files:
 
-Frontmatter (only `title`, `standfirst` and `rubric` are required):
+- `articles/<slug>.md` — an article, published at `/<rubric>/<slug>/` (plain-text copy at `/<rubric>/<slug>.md`)
+- `rubrics/<rubric>.md` — a section page: the body is the intro paragraph, `people` is the "People we follow" list
+- `authors/<slug>.md` — an author page at `/authors/<slug>/`: name, role, photo, links; the body is the bio
+- `pages/<slug>.md` — a page that is not an article (manifesto, about, thankful)
 
-    title, standfirst
+The exact fields for each type are in `src/content.config.ts`.
+
+Article frontmatter (only `title`, `standfirst` and `rubric` are required):
+
     rubric        machines | power | agency | edges | horizon | crossroads
     format        essay | interview | explainer | report
-    author, authorBio, date (YYYY-MM-DD), readingTime (minutes)
+    tags          up to 4 from the list in src/content.config.ts
+    author        file name of an entry in src/content/authors/
+    date (YYYY-MM-DD), readingTime (minutes)
     featured      true puts it in the big card on the homepage
     order         homepage order, low first
-    coverKicker, coverLines, coverNote   typographic cover; *word* highlights a word
-    takeaways     list
-    sourceNote    which kind of source the piece rests on
-    bookmark      { title, description, url }
-    faq           list of { q, a }
-    references    list (HTML allowed)
+    cover, coverCaption                  image path under public/, e.g. /images/x.jpg
+    coverKicker, coverLines, coverNote   typographic cover when there is no image
+    takeaways, sourceNote, bookmark, faq, references
     draft         true hides the article
 
 In the body, `##` headings become numbered sections and the table of contents.
-A blockquote is a pull quote; its second paragraph is the attribution.
+A blockquote is a pull quote. An image with a caption is a `<figure>` with `<figcaption>`.
+
+To add a new standalone page: create `src/content/pages/<slug>.md`, then copy
+`src/pages/about.astro` to `src/pages/<slug>.astro` and change the slug inside.
 
 ## Where things are
 
@@ -40,4 +47,4 @@ A blockquote is a pull quote; its second paragraph is the attribution.
 
 ## Not done yet
 
-- Article bodies, About and For AI systems hold placeholder text in [brackets].
+- Most texts are placeholders in [brackets]; `public/images/placeholder.jpg` stands in for every image.

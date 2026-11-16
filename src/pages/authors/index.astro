@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+const authors = (await getCollection('authors')).sort((a, b) => a.data.name.localeCompare(b.data.name));
+---
+<Base title="Authors">
+  <main class="container stack">
+    <header class="rubric-head"><h1>Authors</h1></header>
+    <section class="people wide">
+      <ul>
+        {authors.map((a) => (
+          <li>
+            {a.data.photo ? <img src={a.data.photo} alt="" loading="lazy" /> : <span class="avatar" aria-hidden="true">{a.data.name.charAt(0)}</span>}
+            <div>
+              <a class="name" href={`/authors/${a.id}/`}>{a.data.name}</a>
+              {a.data.role && <span class="desc">{a.data.role}</span>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </main>
+</Base>

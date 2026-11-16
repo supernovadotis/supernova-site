@@ -1,0 +1,31 @@
+---
+// Layout for pages that are not articles (manifesto, about…). Content lives in src/content/pages/<slug>.md
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Subscribe from './Subscribe.astro';
+const { slug } = Astro.props;
+const page = await getEntry('pages', slug);
+if (!page) throw new Error(`No page content at src/content/pages/${slug}.md`);
+const d = page.data;
+const { Content } = await render(page);
+---
+<Base title={d.title} description={d.standfirst} current={slug}>
+  <main class={`container ${d.backdrop ? "has-backdrop" : ""}`}>
+    {d.backdrop && <div class="backdrop" aria-hidden="true">{d.backdrop}</div>}
+    <header class="static-head">
+      {d.kicker && <p class="kicker">{d.kicker}</p>}
+      <h1 class={d.backdrop ? 'sr-only' : undefined}>{d.title}</h1>
+      {d.standfirst && <p class="standfirst">{d.standfirst}</p>}
+    </header>
+    {d.cover && (
+      <figure class="hero-image">
+        <img src={d.cover} alt="" />
+        {d.coverCaption && <figcaption>{d.coverCaption}</figcaption>}
+      </figure>
+    )}
+    <div class="panel article-main static-body">
+      <div class={`prose ${d.numbered ? '' : 'plain'}`}><Content /></div>
+    </div>
+    <div style="margin-top: 48px"><Subscribe /></div>
+  </main>
+</Base>

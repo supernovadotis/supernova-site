@@ -11,8 +11,8 @@ const { current } = Astro.props;
     ))}
   </nav>
   <nav class="nav" aria-label="Site">
+    <a href="/manifesto/" aria-current={current === 'manifesto' ? 'page' : undefined}>Manifesto</a>
     <a href="/about/" aria-current={current === 'about' ? 'page' : undefined}>About</a>
-    <a href={site.archiveUrl}>Russian archive</a>
     <a class="cta" href="#subscribe">Subscribe</a>
   </nav>
 </header>

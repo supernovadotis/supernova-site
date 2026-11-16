@@ -1,19 +1,4 @@
 ---
-import Base from '../layouts/Base.astro';
-import Subscribe from '../components/Subscribe.astro';
-import { site } from '../data/site';
+import StaticPage from "../components/StaticPage.astro";
 ---
-<Base title="About" current="about">
-  <main class="container stack">
-    <div class="page-head">
-      <h1>About</h1>
-      <p>{site.tagline}. {site.description}</p>
-    </div>
-    <div class="panel article-main">
-      <div class="prose">
-        <p>[About text]</p>
-      </div>
-    </div>
-    <Subscribe />
-  </main>
-</Base>
+<StaticPage slug="about" />

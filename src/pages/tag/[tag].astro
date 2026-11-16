@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { tagList } from '../../content.config';
+
+export function getStaticPaths() {
+  return tagList.map((t) => ({ params: { tag: t.toLowerCase() }, props: { tag: t } }));
+}
+const { tag } = Astro.props;
+const articles = (await getCollection('articles', (a) => !a.data.draft && a.data.tags.includes(tag))).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+<Base title={`#${tag}`}>
+  <main class="container stack">
+    <header class="rubric-head">
+      <p class="kicker">Tag</p>
+      <h1>#{tag}</h1>
+      <div class="tags big" aria-label="All tags">
+        {tagList.map((t) => (
+          <a class="tag on-bg" href={`/tag/${t.toLowerCase()}/`} aria-current={t === tag ? 'page' : undefined}>#{t}</a>
+        ))}
+      </div>
+    </header>
+    {articles.length > 0 ? (
+      <div class="row">{articles.map((a) => <ArticleCard article={a} />)}</div>
+    ) : (
+      <p class="end-note">Nothing published under this tag yet.</p>
+    )}
+  </main>
+</Base>

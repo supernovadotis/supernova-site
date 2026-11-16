@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import Subscribe from '../../components/Subscribe.astro';
@@ -16,6 +16,8 @@ export async function getStaticPaths() {
 const { article, all } = Astro.props;
 const d = article.data;
 const { Content, headings } = await render(article);
+const author = d.author ? await getEntry('authors', d.author) : null;
+const AuthorBio = author ? (await render(author)).Content : null;
 const toc = headings.filter((h) => h.depth === 2);
 const url = new URL(`/${d.rubric}/${article.id}/`, Astro.site).href;
 const mdUrl = `/${d.rubric}/${article.id}.md`;
@@ -34,7 +36,9 @@ const jsonLd = {
   url,
   articleSection: rubricName(d.rubric),
   ...(d.date && { datePublished: d.date.toISOString() }),
-  ...(d.author && { author: { '@type': 'Person', name: d.author } }),
+  ...(author && { author: { '@type': 'Person', name: author.data.name, url: new URL(`/authors/${author.id}/`, Astro.site).href } }),
+  ...(d.cover && { image: new URL(d.cover, Astro.site).href }),
+  ...(d.tags.length && { keywords: d.tags.join(', ') }),
   publisher: { '@type': 'Organization', name: 'Supernova', url: Astro.site?.href },
 };
 const faqLd = d.faq?.length && {
@@ -63,8 +67,11 @@ const faqLd = d.faq?.length && {
       <h1>{d.title}</h1>
       <p class="standfirst">{d.standfirst}</p>
       <div class="byline">
-        {d.author && (
-          <span class="who"><span class="avatar" aria-hidden="true">{d.author.charAt(0)}</span>{d.author}</span>
+        {author && (
+          <a class="who" href={`/authors/${author.id}/`}>
+            {author.data.photo ? <img class="avatar" src={author.data.photo} alt="" /> : <span class="avatar" aria-hidden="true">{author.data.name.charAt(0)}</span>}
+            {author.data.name}
+          </a>
         )}
         {d.date && <time datetime={d.date.toISOString().slice(0, 10)}>{formatDate(d.date)}</time>}
         {d.readingTime && <span>{d.readingTime} min read</span>}
@@ -76,7 +83,12 @@ const faqLd = d.faq?.length && {
       </div>
     </header>
 
-    {coverLines.length > 0 && (
+    {d.cover ? (
+      <figure class="hero-image">
+        <img src={d.cover} alt="" />
+        {d.coverCaption && <figcaption>{d.coverCaption}</figcaption>}
+      </figure>
+    ) : coverLines.length > 0 && (
       <div class="article-cover">
         <span class="cover-small">{d.coverKicker}</span>
         <div>
@@ -95,6 +107,11 @@ const faqLd = d.faq?.length && {
           </aside>
         )}
         <div class="prose" id="prose"><Content /></div>
+        {d.tags.length > 0 && (
+          <div class="tags big article-tags" aria-label="Tags">
+            {d.tags.map((t) => <a class="tag" href={`/tag/${t.toLowerCase()}/`}>#{t}</a>)}
+          </div>
+        )}
       </div>
 
       <div class="article-side">
@@ -144,12 +161,13 @@ const faqLd = d.faq?.length && {
       </section>
     )}
 
-    {d.author && (
+    {author && (
       <section class="author-card" aria-label="About the author">
-        <span class="avatar" aria-hidden="true">{d.author.charAt(0)}</span>
+        {author.data.photo ? <img class="avatar" src={author.data.photo} alt="" /> : <span class="avatar" aria-hidden="true">{author.data.name.charAt(0)}</span>}
         <div>
-          <h3>{d.author}</h3>
-          {d.authorBio && <p>{d.authorBio}</p>}
+          <h3><a href={`/authors/${author.id}/`}>{author.data.name}</a></h3>
+          {author.data.role && <p>{author.data.role}</p>}
+          {AuthorBio && <div class="author-bio"><AuthorBio /></div>}
         </div>
       </section>
     )}

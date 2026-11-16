@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import Subscribe from '../../components/Subscribe.astro';
@@ -9,20 +9,50 @@ export function getStaticPaths() {
   return rubrics.map((r) => ({ params: { rubric: r.slug }, props: { rubric: r } }));
 }
 const { rubric } = Astro.props;
+const entry = await getEntry('rubrics', rubric.slug);
+const Intro = entry ? (await render(entry)).Content : null;
+const people = entry?.data.people ?? [];
 const articles = (await getCollection('articles', (a) => !a.data.draft && a.data.rubric === rubric.slug)).sort(
   (a, b) => a.data.order - b.data.order,
 );
+const tags = [...new Set(articles.flatMap((a) => a.data.tags))];
 ---
 <Base title={rubric.name} current={rubric.slug}>
   <main class="container stack">
-    <div class="page-head">
+    <header class="rubric-head">
+      <p class="kicker">Section</p>
       <h1>{rubric.name}</h1>
-    </div>
+      {Intro && <div class="rubric-intro"><Intro /></div>}
+      {tags.length > 0 && (
+        <div class="tags big" aria-label="Tags in this section">
+          {tags.map((t) => <a class="tag on-bg" href={`/tag/${t.toLowerCase()}/`}>#{t}</a>)}
+        </div>
+      )}
+    </header>
+
     {articles.length > 0 ? (
       <div class="row">{articles.map((a) => <ArticleCard article={a} />)}</div>
     ) : (
       <p class="end-note">Nothing published in this section yet.</p>
     )}
+
+    {people.length > 0 && (
+      <section class="people" aria-label="People we follow">
+        <h2>People we follow</h2>
+        <ul>
+          {people.map((p) => (
+            <li>
+              {p.photo ? <img src={p.photo} alt="" loading="lazy" /> : <span class="avatar" aria-hidden="true">{p.name.charAt(0)}</span>}
+              <div>
+                {p.url ? <a class="name" href={p.url}>{p.name}</a> : <span class="name">{p.name}</span>}
+                <span class="desc">{p.description}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
     <Subscribe />
   </main>
 </Base>

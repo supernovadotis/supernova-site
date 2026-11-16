@@ -1,6 +1,6 @@
 // Plain-text version of every article, for AI systems and anyone who prefers Markdown.
 import type { APIRoute } from 'astro';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 
 export async function getStaticPaths() {
   const all = await getCollection('articles', (a) => !a.data.draft);
@@ -10,15 +10,16 @@ export async function getStaticPaths() {
   }));
 }
 
-export const GET: APIRoute = ({ props }) => {
+export const GET: APIRoute = async ({ props }) => {
   const { article } = props as any;
   const d = article.data;
+  const author = d.author ? await getEntry('authors', d.author) : null;
   const head = [
     `# ${d.title}`,
     '',
     d.standfirst,
     '',
-    [d.author && `By ${d.author}`, d.date && d.date.toISOString().slice(0, 10), `Supernova / ${d.rubric}`]
+    [author && `By ${author.data.name}`, d.date && d.date.toISOString().slice(0, 10), `Supernova / ${d.rubric}`]
       .filter(Boolean)
       .join(' · '),
   ];

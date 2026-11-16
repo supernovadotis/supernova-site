@@ -1,0 +1,43 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Subscribe from '../../components/Subscribe.astro';
+
+export async function getStaticPaths() {
+  const authors = await getCollection('authors');
+  return authors.map((author) => ({ params: { slug: author.id }, props: { author } }));
+}
+const { author } = Astro.props;
+const d = author.data;
+const { Content } = await render(author);
+const articles = (await getCollection('articles', (a) => !a.data.draft && a.data.author === author.id)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: d.name, ...(d.role && { jobTitle: d.role }), url: new URL(`/authors/${author.id}/`, Astro.site).href };
+---
+<Base title={d.name} description={d.role} type="profile">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <main class="container stack">
+    <header class="author-head">
+      {d.photo ? <img class="portrait" src={d.photo} alt="" /> : <span class="avatar portrait" aria-hidden="true">{d.name.charAt(0)}</span>}
+      <div>
+        <p class="kicker">Author</p>
+        <h1>{d.name}</h1>
+        {d.role && <p class="standfirst">{d.role}</p>}
+        <div class="author-bio"><Content /></div>
+        {d.links.length > 0 && (
+          <div class="tags big">{d.links.map((l) => <a class="tag on-bg" href={l.url}>{l.label} ↗</a>)}</div>
+        )}
+      </div>
+    </header>
+
+    <h2 class="page-title">{articles.length === 1 ? '1 article' : `${articles.length} articles`}</h2>
+    {articles.length > 0 ? (
+      <div class="row">{articles.map((a) => <ArticleCard article={a} />)}</div>
+    ) : (
+      <p class="end-note">Nothing published yet.</p>
+    )}
+    <Subscribe />
+  </main>
+</Base>

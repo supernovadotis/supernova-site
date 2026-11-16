@@ -1,15 +1,19 @@
 ---
+import { getEntry } from 'astro:content';
 import { rubricName, formatName, formatDate } from '../data/site';
 // variant: 'default' (cover + text), 'feature' (big opening card), 'compact' (text only)
 const { article, variant = 'default' } = Astro.props;
 const d = article.data;
 const href = `/${d.rubric}/${article.id}/`;
+const author = d.author ? await getEntry('authors', d.author) : null;
 const lines = (d.coverLines ?? []).map((l: string) => l.replace(/\*(.+?)\*/g, '<em>$1</em>'));
 const meta = [formatDate(d.date), d.readingTime && `${d.readingTime} min read`].filter(Boolean).join(' · ');
 ---
-<a class={`card ${variant}`} href={href}>
+<a class={`card ${variant} ${d.cover ? 'has-image' : ''}`} href={href}>
   <div class="card-cover">
-    {variant === 'feature' ? (
+    {d.cover ? (
+      <img src={d.cover} alt="" loading="lazy" />
+    ) : variant === 'feature' ? (
       <>
         <span class="cover-small">{d.coverKicker ?? rubricName(d.rubric)}</span>
         <p class="cover-lines" set:html={lines.join('<br>') || d.title} />
@@ -25,10 +29,10 @@ const meta = [formatDate(d.date), d.readingTime && `${d.readingTime} min read`].
     </div>
     <h3>{d.title}</h3>
     <p class="dek">{d.standfirst}</p>
-    {(d.author || meta) && (
+    {(author || meta) && (
       <p class="meta">
-        {d.author && <strong>{d.author}</strong>}
-        {d.author && meta && ' · '}
+        {author && <strong>{author.data.name}</strong>}
+        {author && meta && ' · '}
         {meta}
       </p>
     )}
