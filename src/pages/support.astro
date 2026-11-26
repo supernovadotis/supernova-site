@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import Subscribe from '../components/Subscribe.astro';
+import { checkout } from '../data/checkout';
+---
+<Base
+  title="Support Supernova"
+  description="Supernova is independent and reader-funded. Support it with a monthly contribution — Reader, SOYUZ Club or Founder — billed through Substack. All amounts in USD."
+>
+  <main class="container">
+    <header class="static-head">
+      <h1>Support Supernova</h1>
+    </header>
+
+    <div class="panel article-main static-body">
+      <div class="prose plain">
+        <p>Supernova is independent. We have no owner, no advertiser and no platform deciding what we may publish. Readers fund it.</p>
+        <p>All amounts are in US dollars (USD) and are billed monthly through Substack. You can cancel at any time.</p>
+      </div>
+    </div>
+
+    <section class="pricing">
+      <div class="row">
+        <div class="tile tier">
+          <span class="t">Reader — USD 5 / month</span>
+          <span class="desc">Plain support. You keep everything you already get, and you make it possible.</span>
+          <a class="btn-glow buy" href={checkout.SUBSTACK_TIER_READER}>Support — USD 5 / month</a>
+        </div>
+        <div class="tile tier">
+          <span class="t">SOYUZ Club — USD 25 / month</span>
+          <span class="desc">Everything in Reader, plus:</span>
+          <ul class="perks">
+            <li>membership of SOYUZ, our readers' club</li>
+            <li>the club newsletter, written for members only and published nowhere else</li>
+            <li>quarterly club gatherings with invited guests</li>
+            <li>special offers on our products and programmes for club members</li>
+          </ul>
+          <a class="btn-glow buy" href={checkout.SUBSTACK_TIER_SOYUZ}>Join SOYUZ — USD 25 / month</a>
+        </div>
+        <div class="tile tier">
+          <span class="t">Founder — USD 100 / month</span>
+          <span class="desc">Everything in SOYUZ, plus:</span>
+          <ul class="perks">
+            <li>your name on our <a href="/thanks/">Thank you</a> page, if you want it there</li>
+            <li>direct funding of an independent publication: at this level you are paying for the work itself — research, reporting, editing</li>
+            <li>a quarterly seat in our editorial planning, where you can propose subjects and ideas for the publication</li>
+          </ul>
+          <a class="btn-glow buy" href={checkout.SUBSTACK_TIER_FOUNDER}>Become a Founder — USD 100 / month</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="panel article-main static-body">
+      <div class="prose plain">
+        <h2>Cancellation</h2>
+        <p>You can cancel a monthly contribution at any time from your Substack account. Access continues through the end of the period you have already paid for, and we do not charge you again after you cancel.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 48px"><Subscribe /></div>
+  </main>
+</Base>
+
+<style>
+  .pricing { margin-top: 32px; }
+  .pricing .row { margin-top: 0; }
+  .tier { gap: 14px; }
+  .tier .t { font-size: 22px; line-height: 1.2; }
+  .tier .desc { font-size: 16px; color: var(--ink-soft); }
+  .perks { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; color: var(--ink-soft); }
+  .perks a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+  .perks a:hover { color: var(--accent-deep); }
+  .buy { display: inline-flex; align-items: center; justify-content: center; margin-top: auto; text-decoration: none; text-align: center; }
+  .buy:hover { color: var(--ink); }
+</style>

@@ -157,6 +157,15 @@ h1, h2, h3, p { margin: 0; }
 .spasibo { display: block; font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; line-height: 1; letter-spacing: -0.03em; }
 .site-footer nav { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 16px; }
 .site-footer nav a { padding: 10px 0; }
+.footer-legal { flex-basis: 100%; width: 100%; margin-top: 16px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px; }
+.footer-legal .legal-links { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 16px; }
+.footer-legal .legal-links a { padding: 4px 0; text-decoration: none; }
+.footer-legal .legal-links a:hover { color: var(--accent-deep); }
+.pay-line { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.pay-line .meta { max-width: 640px; }
+.cards { display: inline-flex; align-items: center; gap: 8px; color: var(--meta); }
+.cardmark { height: 24px; width: auto; }
+.footer-legal .copyright { color: var(--ink-soft); }
 
 /* ---------- Article ---------- */
 .progress { position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 50; }
