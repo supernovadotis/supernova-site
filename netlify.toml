@@ -1,6 +1,6 @@
+# holding branch only: publish the single coming-soon page in holding/.
+# No build step — the Astro site is not built on this branch.
+# The real build config lives on main.
 [build]
-  command = "npm run build"
-  publish = "dist"
-
-[build.environment]
-  NODE_VERSION = "22"
+  publish = "holding"
+  command = ""

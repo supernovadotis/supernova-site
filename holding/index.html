@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Supernova — coming soon</title>
+<meta name="description" content="Supernova is a future-first media platform for the planetary transition. The English edition is on its way." />
+<meta name="robots" content="noindex" />
+<link rel="canonical" href="https://supernova.is/" />
+<meta property="og:title" content="Supernova" />
+<meta property="og:description" content="A future-first media platform for the planetary transition. The English edition is on its way." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://supernova.is/" />
+<style>
+  @font-face { font-family: 'Gramatika'; src: url('/fonts/GramatikaRegular.woff') format('woff'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'Gramatika'; src: url('/fonts/GramatikaBold.woff') format('woff'); font-weight: 700; font-display: swap; }
+  @font-face { font-family: 'Gramatika'; src: url('/fonts/GramatikaBoldShifted.woff') format('woff'); font-weight: 900; font-display: swap; }
+
+  :root {
+    --ink: #1c1917;
+    --ink-soft: #44403c;
+    --meta: #57534e;
+    --bg: #f5f5f4;
+    --surface: #ffffff;
+    --border: #dedede;
+    --accent: #ae85ef;
+    --accent-deep: #6d45c4;
+    --highlight: #c9ff5e;
+    --font: 'Gramatika', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --pill: 9999px;
+    --radius-lg: 40px;
+    --shadow-inner: inset 0 0 1px rgba(0, 0, 0, 0.25);
+    --shadow-card: 0 4px 20px rgba(178, 178, 178, 0.35);
+    --settle: 300ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0 24px 64px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 17.6px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgba(174, 133, 239, 0.31); }
+  a { color: var(--ink); transition: color var(--settle); }
+  a:hover { color: var(--accent-deep); transition-duration: 100ms; }
+  :focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 3px; border-radius: 4px; }
+  mark { background: var(--highlight); color: var(--ink); padding: 0 0.12em; border-radius: 12px; }
+  h1, p { margin: 0; }
+
+  .holding {
+    width: 100%;
+    max-width: 640px;
+    padding: 72px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    text-align: center;
+  }
+  .mark { width: 96px; height: 71px; color: var(--ink); }
+  h1 { font-size: clamp(2.5rem, 9vw, 4rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; }
+  .lede { max-width: 460px; font-size: 22px; line-height: 1.35; color: var(--ink-soft); text-wrap: balance; }
+  .kicker { font-size: 16px; color: var(--meta); }
+
+  .substack {
+    width: 100%;
+    max-width: 480px;
+    height: 150px;
+    border: 0;
+    background: transparent;
+  }
+
+  .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; font-size: 15px; }
+  .links a {
+    display: inline-flex; align-items: center; min-height: 40px; padding: 0 18px;
+    border-radius: var(--pill); background: var(--surface); box-shadow: var(--shadow-inner);
+    text-decoration: none;
+  }
+  .links a:hover { background: #e7e5e4; color: var(--ink); }
+  .foot { font-size: 14px; color: var(--meta); }
+  .foot a { text-decoration: none; }
+
+  /* The mark breathes, as on the site. */
+  .mark-core { transform-origin: 197px 253.7px; animation: sn-breathe 7s ease-in-out infinite; }
+  .mark-ray { animation: sn-twinkle 7s ease-in-out infinite; }
+  .mark-ray:nth-of-type(1) { animation-delay: -1.2s; }
+  .mark-ray:nth-of-type(2) { animation-delay: -3.9s; }
+  .mark-ray:nth-of-type(3) { animation-delay: -5.6s; }
+  @keyframes sn-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+  @keyframes sn-twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+
+  @media (max-width: 640px) { body { padding: 0 12px 48px; } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <main class="holding">
+    <svg class="mark" aria-hidden="true" viewBox="0 0 394 292" fill="none">
+      <circle class="mark-core" cx="197" cy="253.7" r="38.1" fill="currentColor" />
+      <rect x="0.5" y="245.8" width="393" height="15.7" rx="7.8" fill="currentColor" />
+      <line class="mark-ray" x1="269.2" y1="172.4" x2="367.6" y2="65.1" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-dasharray="6 60" />
+      <line class="mark-ray" x1="124.8" y1="172.4" x2="26.4" y2="65.1" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-dasharray="6 60" />
+      <line class="mark-ray" x1="198.5" y1="158.1" x2="198.5" y2="12.6" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-dasharray="6 60" />
+    </svg>
+
+    <p class="kicker">Independent media · est. 2020 · English edition</p>
+    <h1><mark>Coming</mark> soon</h1>
+    <p class="lede">Technology, power and long-term responsibility, read with the sources open.</p>
+
+    <iframe
+      class="substack"
+      src="https://supernovamedia.substack.com/embed?transparent=1"
+      title="Subscribe to Supernova on Substack"
+      width="480"
+      height="150"
+      frameborder="0"
+      scrolling="no"></iframe>
+
+    <div class="links">
+      <a href="https://archive.supernova.is" lang="ru">Русский архив, 2020–2025 ↗</a>
+      <a href="https://t.me/supernovafuture">Telegram ↗</a>
+    </div>
+
+    <p class="foot">supernova.is · <a href="mailto:support@supernova.is">support@supernova.is</a></p>
+  </main>
+</body>
+</html>
