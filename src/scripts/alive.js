@@ -2,6 +2,17 @@
 // Nothing here runs for readers who ask their system for reduced motion.
 const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// 0. The narrow-screen menu: a burger that opens the links as a dropdown.
+//    Navigation, not decoration — so this runs regardless of reduced motion.
+const burger = document.querySelector('.burger');
+if (burger) {
+  const header = burger.closest('.site-header');
+  const setOpen = (open) => burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  burger.addEventListener('click', () => setOpen(burger.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', (e) => { if (header && !header.contains(e.target)) setOpen(false); });
+}
+
 // 1. Daylight: a barely-there shift of the page background through the reader's day.
 const hour = new Date().getHours();
 const light =

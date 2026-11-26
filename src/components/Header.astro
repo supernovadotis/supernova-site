@@ -5,14 +5,19 @@ const { current } = Astro.props;
 ---
 <header class="site-header">
   <a class="logo" href="/"><Mark />{site.name}</a>
-  <nav class="nav" aria-label="Sections">
-    {rubrics.map((r) => (
-      <a href={`/${r.slug}/`} aria-current={current === r.slug ? 'page' : undefined}>{r.name}</a>
-    ))}
-  </nav>
-  <nav class="nav" aria-label="Site">
-    <a href="/manifesto/" aria-current={current === 'manifesto' ? 'page' : undefined}>Manifesto</a>
-    <a href="/about/" aria-current={current === 'about' ? 'page' : undefined}>About</a>
-    <a class="cta" href="#subscribe">Subscribe</a>
-  </nav>
+  <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-menu">
+    <span class="burger-box"></span>
+  </button>
+  <div class="menu-panel" id="site-menu">
+    <nav class="nav" aria-label="Sections">
+      {rubrics.map((r) => (
+        <a href={`/${r.slug}/`} aria-current={current === r.slug ? 'page' : undefined}>{r.name}</a>
+      ))}
+    </nav>
+    <nav class="nav" aria-label="Site">
+      <a href="/manifesto/" aria-current={current === 'manifesto' ? 'page' : undefined}>Manifesto</a>
+      <a href="/about/" aria-current={current === 'about' ? 'page' : undefined}>About</a>
+      <a class="cta" href="#subscribe">Subscribe</a>
+    </nav>
+  </div>
 </header>
