@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import Subscribe from '../components/Subscribe.astro';
+import { checkout } from '../data/checkout';
+---
+<Base
+  title="The Seven Generations Protocol"
+  description="A decision-making framework for long-term thinking, with a 25–30 page PDF guide, templates and a copy-paste AI prompt, plus optional facilitated sessions. All prices in USD."
+>
+  <main class="container">
+    <header class="static-head">
+      <h1>The Seven Generations Protocol</h1>
+      <p class="standfirst">A decision-making framework for long-term thinking — built for humans and their AI partners.</p>
+    </header>
+
+    <div class="panel article-main static-body">
+      <div class="prose plain">
+        <p>Modern decision-making optimises for quarterly results, election cycles and personal convenience. The Seven Generations Protocol asks a different question: how will this choice look to someone living 150–200 years from now?</p>
+        <p>The protocol adapts the Haudenosaunee principle of seven generations into a practical, step-by-step framework you can run on a real decision — a job offer, a product launch, a move, a founding choice. You can work through it alone with the worksheets, or paste the included master prompt into Claude or ChatGPT and have the AI facilitate you through all seven steps.</p>
+
+        <h2>What you get</h2>
+        <ul>
+          <li>A 25–30 page PDF guide covering all seven steps, with key questions, common pitfalls and templates for each</li>
+          <li>A section on working with AI as a facilitator, including a copy-paste master prompt and shorter prompts for specific situations</li>
+          <li>Four decision templates — tech and product, career, organisational, personal — each with a worked example and a blank worksheet</li>
+          <li>A full transcript of an AI-facilitated session, with analysis</li>
+          <li>Further reading, and a short guide to using the protocol in groups</li>
+        </ul>
+
+        <h2>Who it is for</h2>
+        <p>People making decisions whose consequences outlast them: tech workers facing ethical choices, product designers and strategists, organisers, founders, and anyone weighing a major life or career decision.</p>
+      </div>
+    </div>
+
+    <section class="pricing">
+      <h2 class="page-title">Pricing</h2>
+      <p class="meta usd-note">All prices are in US dollars (USD).</p>
+      <div class="row">
+        <div class="tile tier">
+          <span class="t">The Seven Generations Protocol — USD 33</span>
+          <span class="note"><em>Regular price USD 44. The launch price applies through 1 February 2027.</em></span>
+          <span class="desc">The complete PDF guide, templates and AI prompts, delivered as a download link by email.</span>
+          <a class="btn-glow buy" href={checkout.STRIPE_LINK_PROTOCOL}>Buy — USD 33</a>
+        </div>
+        <div class="tile tier">
+          <span class="t">Protocol and a facilitated session — USD 220</span>
+          <span class="desc">The complete guide, plus one three-hour online session in which we work through a real decision of yours using the protocol, facilitated live. Sessions are held in Russian or English, by video call.</span>
+          <a class="btn-glow buy" href={checkout.STRIPE_LINK_SESSION}>Book — USD 220</a>
+        </div>
+        <div class="tile tier">
+          <span class="t">Protocol and a facilitation programme — USD 650</span>
+          <span class="desc">The complete guide, plus five online sessions of 1.5 hours each, spread over an agreed period, working through a decision or a set of connected decisions with full Seven Generations facilitation. Sessions are held in Russian or English, by video call.</span>
+          <a class="btn-glow buy" href={checkout.STRIPE_LINK_PROGRAMME}>Book — USD 650</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="panel article-main static-body">
+      <div class="prose plain">
+        <h2>Delivery</h2>
+        <p><strong>The digital guide.</strong> After payment you receive an email with a download link, immediately and in any case within 24 hours. If it does not arrive, check your spam folder and then write to support@supernova.is.</p>
+        <p><strong>Sessions.</strong> After payment we email you within two working days to agree times. Sessions are held by video call; the link is sent before each session.</p>
+
+        <h2>Promotion terms</h2>
+        <p>The launch price of USD 33 for the Seven Generations Protocol — regular price USD 44 — applies to purchases made through 1 February 2027. It is applied automatically at checkout and cannot be combined with other discounts. After that date the regular price applies.</p>
+
+        <h2>Before you buy</h2>
+        <p>The Seven Generations Protocol and the sessions are tools for reflection and structured decision-making. They are not medical, psychological, therapeutic or legal services, and they do not replace them. The decision is always yours. Purchasers must be 18 or older.</p>
+        <p>Refunds and cancellations are covered on our <a href="/refunds/">Refunds</a> page.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 48px"><Subscribe /></div>
+  </main>
+</Base>
+
+<style>
+  .pricing { margin-top: 32px; }
+  .usd-note { padding: 0 20px; margin-top: 8px; }
+  .pricing .row { margin-top: 20px; }
+  .tier { gap: 14px; }
+  .tier .t { font-size: 22px; line-height: 1.2; }
+  .tier .note { font-size: 14px; color: var(--meta); }
+  .tier .desc { font-size: 16px; color: var(--ink-soft); }
+  .buy { display: inline-flex; align-items: center; justify-content: center; margin-top: auto; text-decoration: none; }
+  .buy:hover { color: var(--ink); }
+</style>

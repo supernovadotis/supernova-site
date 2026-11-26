@@ -1,0 +1,18 @@
+---
+// Simple one-column text page (terms, privacy, refunds, contact): article width,
+// the project's ordinary typography, no hero and no images.
+// `heading` is the on-page H1; `title` is what goes in <title> (defaults to the heading).
+import Base from '../layouts/Base.astro';
+const { heading, title = heading, description, lastUpdated, current } = Astro.props;
+---
+<Base title={title} description={description} current={current}>
+  <main class="container">
+    <header class="static-head">
+      <h1>{heading}</h1>
+      {lastUpdated && <p class="kicker">Last updated: {lastUpdated}</p>}
+    </header>
+    <div class="panel article-main static-body">
+      <div class="prose plain"><slot /></div>
+    </div>
+  </main>
+</Base>
