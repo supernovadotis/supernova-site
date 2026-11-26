@@ -1,6 +1,6 @@
 ---
 name: Pavel Luksha
-role: Founder of Gaia Evolutionary Foundation · SN mentor · Futurist, Global Education Futures
+role: Founder of Gaia Evolutionary Foundation · Futurist, Global Education Futures
 photo: /images/pavel-luksha.png
 links:
   - label: Gaia Evolutionary Foundation
